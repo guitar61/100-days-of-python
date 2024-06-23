@@ -1,0 +1,40 @@
+# 🚨 Don't change the code below 👇
+print("Welcome to the Love Calculator!")
+name1 = input("What is your name? \n")
+name2 = input("What is their name? \n")
+# 🚨 Don't change the code above 👆
+
+#Write your code below this line 👇
+
+combined_names = name1 + name2
+
+lower_case_names = combined_names.lower()
+
+
+t = (lower_case_names.count("t"))
+r = (lower_case_names.count("r"))
+u = (lower_case_names.count("u"))
+e = (lower_case_names.count("e"))
+
+true = t + r + u + e
+
+l = (lower_case_names.count("l"))
+o = (lower_case_names.count("o"))
+v = (lower_case_names.count("v"))
+e = (lower_case_names.count("e"))
+
+love = l + o + v + e
+total_score = str(true) + str(love)
+
+total_score = int(total_score)
+
+# For Love Scores less than 10 or greater than 90, the message should be:
+
+# "Your score is **x**, you go together like coke and mentos."
+
+if total_score < 10 or total_score > 90:
+  massage = print(f"your love score is {total_score}, you go together like coke and mentos.")
+elif total_score >= 40 and total_score <= 50:
+  massage = print(f"your love score is {total_score}, you are alright together.")
+else:
+  print(f"your score is {total_score}.")
