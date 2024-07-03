@@ -1,6 +1,6 @@
-from replit import clear
-from art import logo
-print(logo)
+from replit import clear # external file
+from art import logo # external file
+print(logo) # external file
 #HINT: You can call clear() to clear the output in the console.
 mydic = {}
 
@@ -27,7 +27,7 @@ while con:
     con = input("Are there any other bidders? Type 'yes' or 'no': ")
     if con == 'no':
         con = False
-    elif con == 'yes':
-        clear()
+    elif con == 'yes':  # external file
+        clear()    # external file
 
 highest_bidder(mydic)
