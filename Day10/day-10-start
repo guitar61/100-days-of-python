@@ -1,0 +1,10 @@
+def format_name(f_name, l_name):
+  
+  name = f_name.title()
+  lastname = l_name.title()
+
+  return f"first name is {name} ,  last name is {lastname}"
+
+formated_string = format_name('angela', 'ANGELA')
+
+print(formated_string)
