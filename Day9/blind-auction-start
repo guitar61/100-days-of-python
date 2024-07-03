@@ -1,0 +1,33 @@
+from replit import clear
+from art import logo
+print(logo)
+#HINT: You can call clear() to clear the output in the console.
+mydic = {}
+
+
+def highest_bidder(biddings):
+    highest_bid = 0
+    highest_bidder_person = ""
+    for key, value in mydic.items():
+        if value > highest_bid:
+            highest_bid = value
+            highest_bidder_person = key
+
+    print(f"The winner is {highest_bidder_person} with a bid of ${highest_bid}")
+
+
+print("Welcome to the secret auction program. ")
+con = True
+while con:
+    bidder = input("What is your name?: ")
+    bid = int(input("What's your bid?: $ "))
+
+    mydic[bidder] = bid
+
+    con = input("Are there any other bidders? Type 'yes' or 'no': ")
+    if con == 'no':
+        con = False
+    elif con == 'yes':
+        clear()
+
+highest_bidder(mydic)
