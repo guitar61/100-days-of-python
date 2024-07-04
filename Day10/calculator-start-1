@@ -1,0 +1,26 @@
+def add(n1 , n2):
+  return n1 + n2
+
+def sub(n1, n2):
+  return n1 - n2
+
+def multi(n1 , n2):
+  return n1 * n2
+
+def divide(n1 , n2):
+  return round(n1 / n2, 2)
+
+operation = {
+  "+" : add,
+  "-" : sub,
+  "*" : multi,
+  "/" : divide
+}
+
+num1 = int(input("What is the first number "))
+print("+\n-\n*\n/\n")
+pick = input("Pick one : ")
+num2 = int(input("What is the second number "))
+answer = operation[pick](num1, num2)
+
+print(f"{num1} {pick} {num2} = {answer}")
