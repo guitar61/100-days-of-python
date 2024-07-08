@@ -1,0 +1,106 @@
+import random
+import os  # for clearing the screen each time the program is called
+
+# Constants
+DECK = [11, 2, 3, 4, 5, 6, 7, 8, 9, 10] * 4
+CLEAR_COMMAND = 'cls' if os.name == 'nt' else 'clear'
+def display_ascii_art():
+    ascii_art = r"""
+   ____  _            _    _            _    
+  / __ \| |          | |  (_)          | |   
+ | |  | | | __ _  ___| | ___  __ _  ___| | __
+ | |__| | |/ _` |/ __| |/ / |/ _` |/ __| |/ /
+ | |__| | | (_| | (__|   <| | (_| | (__|   < 
+  \____/|_|\__,_|\___|_|\_\ |\__,_|\___|_|\_\\
+                         _/ |                
+                        |__/                 
+
+"""
+    print(ascii_art)
+
+def clear_screen():
+    """
+    Clear the console screen using ANSI escape sequences.
+    """
+    print("\033[H\033[J", end="")
+def get_fresh_deck():
+    """
+    Return a fresh copy of the deck.
+    """
+    return DECK.copy()
+
+def card_choice(cards):
+    card = random.choice(cards)
+    cards.remove(card)  # removing the chosen card each time from the deck
+    return card
+
+
+def calculate_score(user_computer_cards):
+    """take some cards and calculate the score for each hand"""
+    if sum(user_computer_cards) == 21 and len(user_computer_cards) == 2:
+        return 0
+    if 11 in user_computer_cards and sum(user_computer_cards) > 21:
+        user_computer_cards.remove(11)
+        user_computer_cards.append(1)
+
+    return sum(user_computer_cards)
+
+
+def compare(user_score, com_score):
+    if user_score == com_score:
+        return 'Draw'
+    elif com_score == 0 or com_score > user_score or user_score > 21:
+        return 'You lost big time!'
+    elif user_score == 0 or user_score > com_score:
+        return 'You win'
+
+
+def play_game():
+    """
+      Play a single game of Blackjack.
+      """
+    clear_screen()
+    os.system(CLEAR_COMMAND)
+    cards = get_fresh_deck()
+    user_hand = []
+    computer_hand = []
+    is_game_on = False
+
+    for _ in range(2):
+        user_hand.append(card_choice(cards))
+        computer_hand.append(card_choice(cards))
+
+    while not is_game_on:
+        user_score = calculate_score(user_hand)
+        computer_score = calculate_score(computer_hand)
+
+        print(f"  Your cards :{user_hand}, current score : {user_score}")
+        print(f"  computer first card : {computer_hand[0]}")
+
+        if user_score == 0 or computer_score == 0 or user_score > 21:
+            is_game_on = True
+        else:
+            again = input("Type 'y' to get another card, type 'n' to pass: ")
+            if again == 'y':
+                user_hand.append(card_choice(cards))
+            else:
+                is_game_on = True
+    while computer_score != 0 and computer_score < 17:
+        computer_hand.append(card_choice(cards))
+        computer_score = calculate_score(computer_hand)
+
+    print(f"your final hand:{user_hand}, final score: {user_score}")
+    print(f"computer final hand:{computer_hand}, final score: {computer_score}")
+
+    print(compare(user_score, computer_score))
+
+
+def main():
+    display_ascii_art()
+    while True:
+        play_game()
+        if input("Do you want to play again? Type 'y' for yes, 'n' for no: ") != 'y':
+            break
+
+
+main()
