@@ -1,0 +1,97 @@
+MENU = {
+    "espresso": {
+        "ingredients": {
+            "water": 50,
+            "coffee": 18,
+        },
+        "cost": 1.5,
+    },
+    "latte": {
+        "ingredients": {
+            "water": 200,
+            "milk": 150,
+            "coffee": 24,
+        },
+        "cost": 2.5,
+    },
+    "cappuccino": {
+        "ingredients": {
+            "water": 250,
+            "milk": 100,
+            "coffee": 24,
+        },
+        "cost": 3.0,
+    }
+}
+
+report = {
+    'Water': 300,
+    'Milk': 200,
+    'Coffee': 76,
+    'Money': 0
+}
+
+machine_on = True
+
+
+def rep():
+    print(f"Water: {report['Water']}ml\n"
+          f"Milk: {report['Milk']}ml\n"
+          f"Coffee: {report['Coffee']}g\n"
+          f"Money: ${report['Money']}")
+
+
+def calculate_coins(prompt):
+    quarters = int(input("How many quarters?: "))
+    dimes = int(input("How many dimes?: "))
+    nickels = int(input("How many nickels?: "))
+    pennies = int(input("How many pennies?: "))
+    total = quarters * 0.25 + dimes * 0.1 + nickels * 0.05 + pennies * 0.01
+    if total >= MENU[prompt]['cost']:
+        change = total - MENU[prompt]['cost']
+        report['Money'] += MENU[prompt]['cost']
+        if change > 0:
+            print(f"Here is ${round(change, 2)} in change.")
+
+        # Deduct resources only after confirming the payment is sufficient
+        ingredients = MENU[prompt]["ingredients"]
+        for item in ingredients:
+            report[item.capitalize()] -= ingredients[item]
+
+        return f"Here is your {prompt} ☕️. Enjoy!"
+    else:
+        return "Sorry, that's not enough money. Money refunded."
+
+
+def check_resources(prompt):
+    ingredients = MENU[prompt]["ingredients"]
+
+    for item in ingredients:
+        if report[item.capitalize()] < ingredients[item]:
+            return f"Sorry, there is not enough {item}."
+
+    return True
+
+
+try:
+    while machine_on:
+        prompt = input("What would you like? (espresso/latte/cappuccino): ").lower()
+        if prompt == 'off':
+            machine_on = False
+            print("Turning off the machine. Goodbye!")
+        elif prompt == 'report':
+            rep()
+        elif prompt in MENU:
+            resources_check = check_resources(prompt)
+            if resources_check == True:
+                print(calculate_coins(prompt))
+            else:
+                print(resources_check)
+                machine_on = False  # Quit the program if resources are insufficient
+                print("Turning off the machine due to insufficient resources.")
+        else:
+            print("Invalid selection. Please choose espresso, latte, or cappuccino.")
+# CTRL + D to quit the program 
+except EOFError:
+    print("\nProgram interrupted. Turning off the machine. Goodbye!")
+
